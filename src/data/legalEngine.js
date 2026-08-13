@@ -1,4 +1,47 @@
-// Simple rule-based legal analyzer for Adhikars
+// Rule-based legal analyzer for Adhikars — driven by src/data/kyrDatabase.json
+import kyrData from './kyrDatabase.json';
+
+// Map each JSON category name to a short id used across the app (must match
+// the ids produced in ProblemInputForm.jsx) and a helpline shown to the user.
+const CATEGORY_ID = {
+  'Police & Custody': 'police',
+  'Consumer Laws': 'consumer',
+  'Labour Laws': 'labour',
+  'Cyber Laws': 'cyber',
+  'Fundamental Rights': 'fundamental',
+  'General Rights': 'general',
+  'Tax Laws': 'tax',
+};
+
+const HELPLINE_BY_ID = {
+  police: 'Police Emergency: 100',
+  consumer: 'National Consumer Helpline: 1915',
+  labour: 'Shram Suvidha Portal: labour.gov.in',
+  cyber: 'National Cyber Crime Helpline: 1930',
+  fundamental: 'National Human Rights Commission: 1800-11-6666',
+  general: 'RTI Online: rtionline.gov.in',
+  tax: 'Income Tax e-Nivaran / CPGRAMS: incometax.gov.in',
+};
+
+const DONTS_BY_ID = {
+  police: 'Do not sign or accept statements without legal counsel present.',
+  consumer: 'Do not discard the product, packaging or proof of purchase.',
+  labour: 'Do not resign or sign a settlement under pressure without reviewing it.',
+  cyber: 'Do not share OTPs, PINs or credentials with anyone, even officials.',
+  fundamental: 'Do not delay — constitutional remedies can have limitation periods.',
+  general: 'Do not pay unofficial fees; RTI/public service fees are fixed by law.',
+  tax: 'Do not act on notices without verifying them on the official e-filing portal.',
+};
+
+const RULES = (kyrData?.rules || []).map((r) => ({
+  ...r,
+  shortId: CATEGORY_ID[r.category] || r.category.toLowerCase().replace(/[^a-z]+/g, ''),
+}));
+
+function findRule(shortId) {
+  return RULES.find((r) => r.shortId === shortId) || RULES[0];
+}
+
 export function analyzeLegalProblem(problemText = '', category = 'police', profile = {}) {
   const text = (problemText || '').toString().toLowerCase();
   const acts = new Set();
@@ -7,48 +50,25 @@ export function analyzeLegalProblem(problemText = '', category = 'police', profi
   const helplines = new Set();
   const specialProtections = [];
 
-  // Basic category to statute mapping
-  // authoritative mapping: include common statutes and recent guidance
-  const categoryMap = {
-    police: ['Indian Penal Code (IPC)', 'Criminal Procedure Code (CrPC)', 'BNSS 2023 Guidance'],
-    consumer: ['Consumer Protection Act, 2019', 'Bureau of Indian Standards Guidance'],
-    cyber: ['Information Technology Act, 2000', 'IT Rules & BNSS 2023 Cyber Guidance'],
-    finance: ['Reserve Bank of India Guidelines', 'Negotiable Instruments Act']
-  };
+  const primaryRule = findRule(category);
 
-  (categoryMap[category] || []).forEach(a => acts.add(a));
+  // Primary category's governing laws, guidance and helpline
+  (primaryRule?.governing_laws || []).forEach((a) => acts.add(a));
+  (primaryRule?.guidelines || []).forEach((g) => dos.push(g));
+  if (HELPLINE_BY_ID[primaryRule?.shortId]) helplines.add(HELPLINE_BY_ID[primaryRule.shortId]);
+  if (DONTS_BY_ID[primaryRule?.shortId]) donts.push(DONTS_BY_ID[primaryRule.shortId]);
 
-  // keyword heuristics
-  if (text.includes('fir') || text.includes('police') || text.includes('custody') || text.includes('assault')) {
-    acts.add('Indian Penal Code (IPC)');
-    acts.add('Criminal Procedure Code (CrPC)');
-    acts.add('BNSS 2023 Guidance');
-    helplines.add('Police Emergency: 100');
-    dos.push('Attend the nearest police station and insist on an FIR entry; obtain a written receipt.');
-    donts.push('Do not sign or accept statements without legal counsel present.');
-  }
-
-  if (text.includes('cyber') || text.includes('phishing') || text.includes('transaction') || text.includes('login') || text.includes('fraud') || text.includes('upi')) {
-    acts.add('Information Technology Act, 2000');
-    acts.add('BNSS 2023 Guidance');
-    helplines.add('Cyber Crime Helpline: 1930');
-    dos.push('Preserve all digital records: screenshots, transaction IDs, device logs and bank messages.');
-    donts.push('Do not share OTPs, UPI PINs or credentials with anyone.');
-  }
-
-  if (text.includes('consumer') || text.includes('refund') || text.includes('defect') || text.includes('warranty') || text.includes('e-commerce')) {
-    acts.add('Consumer Protection Act, 2019');
-    helplines.add('Consumer Helpline: 1800-11-4000');
-    dos.push('Preserve invoices, order IDs, seller communications and delivery proofs.');
-    donts.push('Do not dispose of the defective product until advised by consumer forum or authority.');
-  }
-
-  if (text.match(/\u20b9|rs|rupee|\d{3,}/)) {
-    acts.add('Reserve Bank of India Guidelines');
-    helplines.add('Bank Customer Care (see bank)');
-    dos.push('Report the transaction to your bank and raise an official dispute / chargeback.');
-    donts.push('Do not transfer additional funds to unverified accounts.');
-  }
+  // Keyword heuristics: pull in other categories whose keywords appear in the text
+  RULES.forEach((rule) => {
+    if (rule.shortId === primaryRule?.shortId) return;
+    const hit = (rule.keywords || []).some((k) => text.includes(k.toLowerCase()));
+    if (hit) {
+      (rule.governing_laws || []).forEach((a) => acts.add(a));
+      if (rule.guidelines?.[0]) dos.push(rule.guidelines[0]);
+      if (HELPLINE_BY_ID[rule.shortId]) helplines.add(HELPLINE_BY_ID[rule.shortId]);
+      specialProtections.push(`Also relevant: ${rule.title}`);
+    }
+  });
 
   // Demographic protections
   if (profile?.pwd) {
@@ -66,10 +86,6 @@ export function analyzeLegalProblem(problemText = '', category = 'police', profi
     dos.push('Consider filing an FIR and seek immediate protective orders, and contact women helplines.');
     helplines.add('Women Helpline: 181');
   }
-  if ((profile?.age || '').toLowerCase() === 'senior') {
-    specialProtections.push('Senior citizen protections under Maintenance and Welfare of Parents and Senior Citizens Act');
-    dos.push('Reach out to local senior citizen support services and seek immediate legal aid.');
-  }
 
   // Ensure at least three dos/donts
   while (dos.length < 3) dos.push('Document everything: date, time, persons involved and witnesses.');
@@ -79,20 +95,27 @@ export function analyzeLegalProblem(problemText = '', category = 'police', profi
     helplines.add('Police Emergency: 100');
   }
 
-  // legal rights summary
-  const legalRightsSummary = `Preliminary assessment indicates potential applicability of: ${Array.from(acts).join(', ')}. This is an informational overview and not a substitute for formal legal advice.`;
+  // legal rights summary — built from the primary rule's rights_summary
+  const rightsText = (primaryRule?.rights_summary || []).join(' ');
+  const legalRightsSummary = `${rightsText} This is an informational overview and not a substitute for formal legal advice.`.trim();
 
-  // generated draft (vintage/formal tone)
-  const generatedDraft = `Office of the Petitioner\n\nDate: ${new Date().toLocaleDateString()}\n\nTo\nThe Officer In-Charge / Concerned Authority\n\nSubject: Formal Grievance and Request for Action under relevant statutes\n\nSir / Madam,\n\nI, ${profile?.name || '____________'}, of ${profile?.address || '____________'}, hereby submit the following statement of facts and request that appropriate action be taken under the applicable law.\n\nStatement of facts:\n${problemText || '<<No problem text provided>>'}\n\nApplicable legal provisions (preliminary): ${Array.from(acts).join('; ')}.\n\nRelief sought and steps requested:\n- That a formal enquiry be registered and records preserved.\n- That protection / interim measures be provided where applicable.\n- That appropriate prosecution / remedy be pursued under the relevant statutes.\n\nProfile details:\n- Caste/Category: ${profile?.caste || 'General'}\n- Disability: ${profile?.pwd ? 'PwD' : 'Non-Disabled'}\n- Gender/Age: ${profile?.gender || 'General'} / ${profile?.age || 'N/A'}\n\nI submit this grievance in good faith and pray for prompt consideration and action.\n\nYours faithfully,\n\n${profile?.name || '____________'}`;
+  // generated draft — use the rule's grievance template where available, filled with the facts
+  const baseTemplate = primaryRule?.grievance_template || 'To,\nThe Concerned Authority,\nSubject: Formal Grievance\n\nI, {NAME}, hereby record my grievance and request appropriate action.';
+  const filledTemplate = baseTemplate
+    .replace(/\{NAME\}/g, profile?.name || '____________')
+    .replace(/\{DATE\}/g, new Date().toLocaleDateString())
+    .replace(/\{WORKPLACE\}/g, profile?.address || '____________');
+
+  const generatedDraft = `${filledTemplate}\n\nStatement of facts:\n${problemText || '<<No problem text provided>>'}\n\nApplicable legal provisions (preliminary): ${Array.from(acts).join('; ')}.\n\nProfile details:\n- Caste/Category: ${profile?.caste || 'General'}\n- Disability: ${profile?.pwd ? 'PwD' : 'Non-Disabled'}\n- Gender: ${profile?.gender || 'General'}\n\nI submit this grievance in good faith and pray for prompt consideration and action.\n\nYours faithfully,\n\n${profile?.name || '____________'}`;
 
   return {
     applicableActs: Array.from(acts),
     legalRightsSummary,
-    dos: dos.slice(0,3),
-    donts: donts.slice(0,3),
+    dos: dos.slice(0, 4),
+    donts: donts.slice(0, 3),
     specialProtections,
     helplines: Array.from(helplines),
-    generatedDraft
+    generatedDraft,
   };
 }
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import kyrData from '../data/kyrDatabase.json';
 
 const QUICK = [
   'Wheelchair user denied FIR',
@@ -7,15 +8,27 @@ const QUICK = [
   'Recovery agent harassment at home',
 ];
 
-const DOMAINS = [
-  { id: 'police', glyph: '⚖', label: 'Police & Custody', desc: 'Arrest, detention, FIR & custodial rights.' },
-  { id: 'consumer', glyph: '𝔅', label: 'Consumer & Digital', desc: 'Refunds, defects & e-commerce disputes.' },
-  { id: 'cyber', glyph: '𝔊', label: 'Cyber Crime', desc: 'Fraud, phishing & online offences.' },
-  { id: 'finance', glyph: '₹', label: 'Finance & Banking', desc: 'Transactions, recovery agents & RBI matters.' },
-];
+// Categories are sourced directly from kyrDatabase.json ("categories" list),
+// each mapped to a short id, glyph and description used by the rule engine.
+const CATEGORY_META = {
+  'Police & Custody': { id: 'police', glyph: '⚖', desc: 'Arrest, detention, FIR & custodial rights.' },
+  'Consumer Laws': { id: 'consumer', glyph: '𝔅', desc: 'Refunds, defects & e-commerce disputes.' },
+  'Labour Laws': { id: 'labour', glyph: '⚒', desc: 'Wages, termination & workplace conditions.' },
+  'Cyber Laws': { id: 'cyber', glyph: '𝔊', desc: 'Fraud, phishing & online offences.' },
+  'Fundamental Rights': { id: 'fundamental', glyph: '§', desc: 'Constitutional guarantees & remedies.' },
+  'General Rights': { id: 'general', glyph: '𝔦', desc: 'RTI, rations & public service entitlements.' },
+  'Tax Laws': { id: 'tax', glyph: '₹', desc: 'Income tax, GST & assessment notices.' },
+};
+
+const DOMAINS = (kyrData?.categories || []).map((name) => ({
+  id: CATEGORY_META[name]?.id || name.toLowerCase().replace(/[^a-z]+/g, ''),
+  glyph: CATEGORY_META[name]?.glyph || '§',
+  label: name,
+  desc: CATEGORY_META[name]?.desc || '',
+}));
 
 export default function ProblemInputForm({ onAnalyze }) {
-  const [category, setCategory] = useState('police');
+  const [category, setCategory] = useState(DOMAINS[0]?.id || 'police');
   const [caste, setCaste] = useState('General');
   const [disability, setDisability] = useState(false);
   const [gender, setGender] = useState('General');
@@ -31,7 +44,7 @@ export default function ProblemInputForm({ onAnalyze }) {
 
   function submit(e) {
     e?.preventDefault?.();
-    const profile = { caste, pwd: disability, gender, age: gender === 'Senior' ? 'Senior' : '' };
+    const profile = { caste, pwd: disability, gender };
     onAnalyze?.(text, category, profile);
   }
 
@@ -72,7 +85,7 @@ export default function ProblemInputForm({ onAnalyze }) {
             <select id="gender" className="select" value={gender} onChange={(e) => setGender(e.target.value)}>
               <option>General</option>
               <option>Woman</option>
-              <option>Senior</option>
+              <option>Male</option>
             </select>
           </div>
         </div>

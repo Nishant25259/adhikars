@@ -145,7 +145,7 @@ button{ font:inherit; }
 .select:hover, .select:focus{ border-color:var(--brass); }
 
 /* ---------------- Domain tiles (Section II) ---------------- */
-.domain-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.domain-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(160px, 1fr)); gap:12px; }
 .domain-tile{
   text-align:left; cursor:pointer;
   background:var(--parchment); border:1px solid var(--line); border-radius:var(--radius-m);
@@ -175,8 +175,7 @@ textarea.affidavit{
   width:100%; min-height:150px; resize:vertical;
   background:var(--parchment);
   border:1px solid var(--line); border-radius:var(--radius-m);
-  padding:18px; font-family:var(--serif-body); font-size:15.5px; color:var(--ink); line-height:1.9;
-  background-image:repeating-linear-gradient(var(--parchment) 0 30px, var(--line) 30px 31px);
+  padding:18px; font-family:var(--serif-body); font-size:15.5px; color:var(--ink); line-height:1.7;
   outline:none; transition:border-color .15s ease;
 }
 textarea.affidavit:focus{ border-color:var(--brass); }
@@ -309,7 +308,7 @@ textarea.affidavit::placeholder{ color:var(--ink-faint); font-style:italic; }
 /* ---------------- Responsive ---------------- */
 @media (max-width:760px){
   .id-card{ grid-template-columns:1fr; }
-  .domain-grid{ grid-template-columns:repeat(2,1fr); }
+  .domain-grid{ grid-template-columns:repeat(2, 1fr); }
   .ledger-2{ grid-template-columns:1fr; }
   .verdict > .acts, .verdict > .protection-card, .verdict > .ledger-2,
   .verdict > .directory, .verdict > .letter-block, .verdict > .fineprint{ margin-left:20px; margin-right:20px; }
