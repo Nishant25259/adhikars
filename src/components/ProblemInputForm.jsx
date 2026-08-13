@@ -81,7 +81,7 @@ export default function ProblemInputForm({ onAnalyze }) {
           </div>
 
           <div className="field-group">
-            <label className="label" htmlFor="gender">Gender / Age</label>
+            <label className="label" htmlFor="gender">Gender</label>
             <select id="gender" className="select" value={gender} onChange={(e) => setGender(e.target.value)}>
               <option>General</option>
               <option>Woman</option>
