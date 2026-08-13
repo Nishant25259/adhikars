@@ -1,14 +1,16 @@
+import React from 'react';
+
 export default function Header() {
   return (
-    <header className="app-header">
-      <div className="brand">
-        <div className="brand-mark">A</div>
+    <header className="header-wrap">
+      <div className="header-inner">
         <div>
-          <h1>Adhikars</h1>
+          <div className="header-title">Adhikars | अधिकार</div>
+          <div className="header-sub">National Digital Legal Awareness & KYR Framework</div>
         </div>
-      </div>
 
-      <div className="header-tag">Legal Rights Companion</div>
+        <div className="status-pill">🏛️ Governed Knowledge Base | Ministry of Law & Justice Indexed</div>
+      </div>
     </header>
   );
 }
