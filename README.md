@@ -17,35 +17,37 @@ This project addresses this challenge by providing a **Know-Your-Rights (KYR) Lo
 ---
 
 ## 🏛️ System Architecture & Logic Pipeline
+```
 [ Frontend Input: Category + Problem Text + User Persona ]
+                           │
+                           ▼
+ ┌─────────────────────────────────────────────────────────┐
+ │ STAGE 1: Emergency & Safety Intercept                   │
+ │ - Scans for immediate threat keywords                   │
+ │ - IF Threat: Fast-tracks 112 / 181 emergency helplines   │
+ └──────────────────────────┬──────────────────────────────┘
+                            │ (Safe Query)
+                            ▼
+ ┌─────────────────────────────────────────────────────────┐
+ │ STAGE 2: NALSA Sec 12 Free Legal Aid Engine             │
+ │ - Evaluates persona (Worker, Women, ST/SC, Senior)      │
+ │ - Evaluates annual income against state threshold       │
+ └──────────────────────────┬──────────────────────────────┘
                             │
                             ▼
-┌─────────────────────────────────────────────────────────┐
-│ STAGE 1: Emergency & Safety Intercept                   │
-│ - Scans for immediate threat keywords                   │
-│ - IF Threat: Fast-tracks 112 / 181 emergency helplines   │
-└──────────────────────────┬──────────────────────────────┘
-                           │ (Safe Query)
-                           ▼
-┌─────────────────────────────────────────────────────────┐
-│ STAGE 2: NALSA Sec 12 Free Legal Aid Engine             │
-│ - Evaluates persona (Worker, Women, ST/SC, Senior)      │
-│ - Evaluates annual income against state threshold       │
-└──────────────────────────┬──────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────┐
-│ STAGE 3: KYR Category & Keyword Matcher                 │
-│ - Maps queries to 7 core legal domains                  │
-│ - Retrieves applicable BNS/BNSS sections & entitlements│
-└──────────────────────────┬──────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────┐
-│ STAGE 4: Actionable Output & Document Generator         │
-│ - Produces 3-step actionable guidelines                 │
-│ - Auto-fills custom complaint/notice text               │
-└──────────────────────────┴──────────────────────────────┘
+ ┌─────────────────────────────────────────────────────────┐
+ │ STAGE 3: KYR Category & Keyword Matcher                 │
+ │ - Maps queries to 7 core legal domains                  │
+ │ - Retrieves applicable BNS/BNSS sections & entitlements│
+ └──────────────────────────┬──────────────────────────────┘
+                            │
+                            ▼
+ ┌─────────────────────────────────────────────────────────┐
+ │ STAGE 4: Actionable Output & Document Generator         │
+ │ - Produces 3-step actionable guidelines                 │
+ │ - Auto-fills custom complaint/notice text               │
+ └─────────────────────────────────────────────────────────┘
+```
 ---
 
 ## 📜 Covered Legal Domains (7 Core Categories)
