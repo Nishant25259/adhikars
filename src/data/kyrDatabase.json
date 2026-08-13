@@ -1,0 +1,161 @@
+{
+  "categories": [
+    "Police & Custody",
+    "Consumer Laws",
+    "Labour Laws",
+    "Cyber Laws",
+    "Fundamental Rights",
+    "General Rights",
+    "Tax Laws"
+  ],
+  "personas": [
+    { "id": "general", "label": "General Citizen" },
+    { "id": "worker", "label": "Migrant / Daily Worker" },
+    { "id": "women", "label": "Women & Minors" },
+    { "id": "tribal", "label": "Tribal / Forest Dwellers" },
+    { "id": "senior", "label": "Senior Citizens" }
+  ],
+  "rules": [
+    {
+      "id": "RULE-POLICE-01",
+      "category": "Police & Custody",
+      "persona_match": ["general", "women", "worker", "tribal", "senior"],
+      "keywords": ["police", "arrest", "custody", "fir", "station", "handcuff", "bail", "interrogation"],
+      "title": "Rights During Arrest & Police Custody",
+      "governing_laws": ["Bharatiya Nagarik Suraksha Sanhita (BNSS), 2023", "Article 22 of Constitution"],
+      "rights_summary": [
+        "Right to know the exact grounds of arrest immediately.",
+        "Right to inform a family member/friend as soon as detained.",
+        "Women cannot be arrested after sunset or before sunrise except in extraordinary circumstances with a female officer.",
+        "Right to consult a legal practitioner of choice and get a free medical checkup every 48 hours."
+      ],
+      "guidelines": [
+        "Step 1: Ask the arresting officer for their name, ID tag, and an official Arrest Memo.",
+        "Step 2: Ensure an entry is made in the Police Station Diary (General Diary).",
+        "Step 3: Insist on contacting a family member or calling the District Legal Services Authority (DLSA) for free lawyer support.",
+        "Step 4: Demand to be produced before a Judicial Magistrate within 24 hours of arrest."
+      ],
+      "grievance_template": "To,\nThe Superintendent of Police / Judicial Magistrate,\nSubject: Complaint Regarding Illegal Detention / Procedural Lapse During Arrest\n\nI, {NAME}, hereby record that on {DATE}, I was detained/arrested at {WORKPLACE} without being provided grounds of arrest or an arrest memo.\n\nI request immediate legal intervention and production before the Judicial Magistrate as per BNSS provisions."
+    },
+    {
+      "id": "RULE-CONSUMER-01",
+      "category": "Consumer Laws",
+      "persona_match": ["general", "senior", "worker"],
+      "keywords": ["refund", "defective", "fraud", "scam", "overcharged", "fake", "warranty", "seller"],
+      "title": "Protection Against Unfair Trade & Defective Goods",
+      "governing_laws": ["Consumer Protection Act, 2019"],
+      "rights_summary": [
+        "Right to protection against hazardous goods and unfair trade practices.",
+        "Right to full refund, replacement, or compensation for defective products or deficient services.",
+        "Protection against misleading advertisements and fake reviews."
+      ],
+      "guidelines": [
+        "Step 1: Preserve tax invoice/receipt, product photographs, warranty cards, and order emails.",
+        "Step 2: Send a written notice/email to seller/company giving 7–14 days for resolution.",
+        "Step 3: Register a complaint on the National Consumer Helpline (NCH) at consumerhelpline.gov.in or call 1915.",
+        "Step 4: File an online e-Daakhil petition with the District Consumer Commission if unresolved."
+      ],
+      "grievance_template": "To,\nThe Customer Care Manager / Seller,\nSubject: Notice for Refund/Replacement of Defective Product\n\nI, {NAME}, purchased {WORKPLACE} on {DATES} invoice no. {SURVEY_NO} for Rs. {AMOUNT}.\n\nThe product is defective/deficient. I request an immediate replacement or full refund within 7 days, failing which I will initiate e-Daakhil consumer court proceedings."
+    },
+    {
+      "id": "RULE-LABOUR-01",
+      "category": "Labour Laws",
+      "persona_match": ["general", "worker"],
+      "keywords": ["salary", "wage", "unpaid", "boss", "factory", "delay", "termination", "overtime"],
+      "title": "Right to Timely Payment of Wages & Safe Work Conditions",
+      "governing_laws": ["Code on Wages, 2019", "Occupational Safety, Health & Working Conditions Code, 2020"],
+      "rights_summary": [
+        "Wages must be paid by the 7th or 10th of every calendar month.",
+        "Right to double wages for mandatory overtime work beyond legal hours.",
+        "Right to claim up to 10x compensation on unpaid wages."
+      ],
+      "guidelines": [
+        "Step 1: Gather employment proof (Job Card, attendance logs, payment slips, or chat records).",
+        "Step 2: Send a written demand notice to your employer giving a 7-day resolution window.",
+        "Step 3: File an online grievance on the Shram Suvidha Portal or report to the District Labour Inspector.",
+        "Step 4: Approach the District Legal Services Authority (DLSA) for free legal aid."
+      ],
+      "grievance_template": "To,\nThe Labour Inspector / Employer,\nSubject: Non-Payment of Pending Wages\n\nI, {NAME}, was employed at {WORKPLACE}. My wages for {DATES} amounting to Rs. {AMOUNT} have not been released despite repeated demands.\n\nKindly release my payment within 7 days, failing which I will lodge a formal complaint under the Code on Wages."
+    },
+    {
+      "id": "RULE-CYBER-01",
+      "category": "Cyber Laws",
+      "persona_match": ["general", "women", "senior"],
+      "keywords": ["cyber", "online", "otp", "phishing", "hacked", "morphing", "blackmail", "financial fraud"],
+      "title": "Protection Against Online Financial Fraud & Cyber Crimes",
+      "governing_laws": ["Information Technology Act, 2000", "Digital Personal Data Protection Act, 2023"],
+      "rights_summary": [
+        "Right to report financial cyber fraud within the 'Golden Hour' (first 2 hours) to freeze stolen funds.",
+        "Protection against non-consensual publishing of personal photos or morphed images.",
+        "Right to privacy and data deletion for misuse of personal identifiers."
+      ],
+      "guidelines": [
+        "Step 1: Immediately dial 1930 (National Cyber Crime Helpline) to lock fraudulent bank transfers.",
+        "Step 2: Take screenshots of payment receipts, fraud SMS/WhatsApp chats, and URLs.",
+        "Step 3: File a complaint on cybercrime.gov.in (can be filed anonymously for sexual/harassment content).",
+        "Step 4: Request bank to issue a lien on the fraud recipient account."
+      ],
+      "grievance_template": "To,\nThe Cyber Crime Cell / Nodal Officer,\nSubject: Reporting Online Financial Fraud / Cyber Harassment\n\nI, {NAME}, report an unauthorized transaction of Rs. {AMOUNT} on {DATE} from my account.\n\nFraudulent Transaction Txn ID: {SURVEY_NO}. Kindly freeze the recipient account and initiate investigation under IT Act."
+    },
+    {
+      "id": "RULE-FUNDAMENTAL-01",
+      "category": "Fundamental Rights",
+      "persona_match": ["general", "worker", "women", "tribal", "senior"],
+      "keywords": ["constitution", "equality", "freedom", "discrimination", "caste", "religion", "speech", "education"],
+      "title": "Constitutional Guarantees & Enforcement of Remedies",
+      "governing_laws": ["Articles 14, 19, 21 & 32 of Indian Constitution"],
+      "rights_summary": [
+        "Article 21: Right to Life & Personal Liberty (includes right to clean water, livelihood, and privacy).",
+        "Article 14 & 15: Prohibition of discrimination on grounds of religion, race, caste, sex, or place of birth.",
+        "Article 32: Right to move the High Court or Supreme Court directly via Writs for fundamental rights violation."
+      ],
+      "guidelines": [
+        "Step 1: Document evidence showing state action or public authority violating fundamental rights.",
+        "Step 2: File a representation/appeal before the State Human Rights Commission (SHRC) or National Commission (NHRC).",
+        "Step 3: Approach the High Court under Article 226 by filing a Public Interest Litigation (PIL) or Writ Petition.",
+        "Step 4: Request free legal counsel from the High Court Legal Services Committee."
+      ],
+      "grievance_template": "To,\nThe High Court Legal Services Committee / NHRC,\nSubject: Representation Regarding Violation of Fundamental Right under Article 21/14\n\nI, {NAME}, resident of {ADDRESS}, submit that public authorities at {VILLAGE} have arbitrarily deprived me/my community of fundamental entitlements.\n\nI request legal representation to file a Writ Petition for enforcement of constitutional rights."
+    },
+    {
+      "id": "RULE-GENERAL-01",
+      "category": "General Rights",
+      "persona_match": ["general", "senior", "worker"],
+      "keywords": ["rti", "information", "gram sabha", "ration", "bpl", "aadhaar", "public service", "scheme"],
+      "title": "Right to Information & Public Service Entitlements",
+      "governing_laws": ["Right to Information (RTI) Act, 2005", "Right to Public Services Acts"],
+      "rights_summary": [
+        "Right to inspect government records, works, and obtain certified copies of government files.",
+        "Public Information Officer (PIO) must provide information within 30 days (48 hours if life/liberty is at stake).",
+        "Right to timely delivery of essential services (Ration, Birth Certificates, Caste Certificates)."
+      ],
+      "guidelines": [
+        "Step 1: Identify the relevant government department (e.g., Food & Civil Supplies, Panchayat).",
+        "Step 2: Draft a clear RTI application asking specific questions (avoid asking for opinions).",
+        "Step 3: Submit via rti-online portal or physically with a ₹10 court fee stamp (BPL cardholders are fee-exempt).",
+        "Step 4: File a First Appeal if no reply is received within 30 days."
+      ],
+      "grievance_template": "To,\nThe Public Information Officer (PIO),\nOffice of {WORKPLACE},\nSubject: Application under Section 6(1) of RTI Act, 2005\n\n1. Name of Applicant: {NAME}\n2. Information Sought: Please provide status report and certified copies regarding application no {SURVEY_NO} submitted on {DATE}.\n\nFee of Rs. 10 attached / Exempt under BPL category."
+    },
+    {
+      "id": "RULE-TAX-01",
+      "category": "Tax Laws",
+      "persona_match": ["general", "senior"],
+      "keywords": ["income tax", "gst", "notice", "pan", "itr", "tds", "refund", "assessment"],
+      "title": "Taxpayer Protections & Income Tax/GST Grievance Rights",
+      "governing_laws": ["Income Tax Act, 1961 (Taxpayers' Charter)", "CGST Act, 2017"],
+      "rights_summary": [
+        "Taxpayers' Charter: Right to fair, courteous, and prompt treatment by tax authorities.",
+        "Right to appeal against arbitrary tax demand notices within 30 days of service.",
+        "Right to receive income tax refund along with statutory interest on delayed refunds."
+      ],
+      "guidelines": [
+        "Step 1: Check the authenticity of any tax notice on the e-filing portal using Document Identification Number (DIN).",
+        "Step 2: Do not share OTPs or bank details with callers claiming to be tax officers.",
+        "Step 3: File an online response or appeal via the e-Proceedings tab on incometax.gov.in.",
+        "Step 4: Submit a grievance on CPGRAMS or e-Nivaran if refund is delayed over 60 days."
+      ],
+      "grievance_template": "To,\nThe Assessing Officer / Income Tax Ombudsman,\nSubject: Application for Processing Pending Income Tax Refund\n\nI, {NAME}, PAN: {SURVEY_NO}, filed my Income Tax Return for Assessment Year {DATES}.\n\nMy refund of Rs. {AMOUNT} remains unpaid. I request processing and release of refund along with interest under Section 244A."
+    }
+  ]
+}
