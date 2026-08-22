@@ -3,7 +3,6 @@
 > An intelligent, accessible digital assistant designed to bridge the legal awareness gap in India. It translates dense Indian legislation into simplified, actionable rights, step-by-step guidelines, free legal aid mapping, and automated complaint drafts for citizens and marginalized communities.
 
 ---
-
 ## 📌 Problem Statement Overview
 
 Access to legal information in India remains a critical challenge, particularly for illiterate, rural, and marginalized populations. Many citizens are unaware of their fundamental rights, statutory entitlements, or how to seek legal redressal.
