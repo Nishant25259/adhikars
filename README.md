@@ -65,27 +65,34 @@ This project addresses this challenge by providing a **Know-Your-Rights (KYR) Lo
 ## 📁 Repository Structure
 
 ```text
-kyr-legal-assistant/
-│
-├── backend/                       # 🧠 Core Backend Logic API (Python)
-│   ├── app/
-│   │   ├── __init__.py
-│   │   ├── main.py                # FastAPI Application & REST Endpoints
-│   │   ├── database.py            # KYR Laws, Rules, & Template Repository
-│   │   ├── schemas.py             # Pydantic Data Models (Request/Response)
-│   │   └── services/              # Pipeline Logic Modules
-│   │       ├── emergency.py       # Safety Intercept Handler
-│   │       └── legal_aid.py       # NALSA Sec 12 Rule Engine
-│   ├── requirements.txt           # Backend Dependencies
-│   └── README.md                  # API Docs for Frontend Developers
-│
-├── frontend/                      # 🎨 User Interface (React / PWA)
-│   ├── src/
-│   │   ├── components/            # UI Components (Voice, Persona, Cards)
-│   │   └── App.jsx
-│   └── package.json
-│
-└── README.md                      # Project Root Documentation
+adhikars/
+├── index.html
+├── package.json
+├── README.md
+├── vite.config.js
+└── src/
+    ├── main.jsx                 # React entry point
+    ├── App.jsx                  # Main application and view flow
+    ├── index.css                # Primary global styles
+    ├── styles.css               # Additional styles
+    │
+    ├── components/
+    │   ├── Header.jsx
+    │   ├── ProblemInputForm.jsx
+    │   ├── LegalSolutionView.jsx
+    │   ├── RightsCard.jsx
+    │   ├── PersonaSelector.jsx
+    │   ├── VoiceModule.jsx
+    │   ├── SolutionView.jsx
+    │   └── UserForm.jsx
+    │
+    ├── data/
+    │   ├── kyrDatabase.json      # Legal categories and rules
+    │   ├── kyrDatabase.js        # JavaScript legal data
+    │   └── legalEngine.js        # Active rule-based analyzer
+    │
+    └── utils/
+        └── legalEngine.js        # Older/alternate legal analyzer
 
 
 
